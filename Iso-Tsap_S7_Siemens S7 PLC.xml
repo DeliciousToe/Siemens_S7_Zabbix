@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>7.0</version>
+    <template_groups>
+        <template_group>
+            <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
+            <name>Templates</name>
+        </template_group>
+    </template_groups>
+    <templates>
+        <template>
+            <uuid>2afd61a9c7794d88940c84202d7ce71b</uuid>
+            <template>Template_Siemens_S7_PLC</template>
+            <name>Monitoring Siemens S7 PLC</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>91ff85ca553d4cda8040ab23717062c0</uuid>
+                    <name>S7 Basic Hardware</name>
+                    <type>EXTERNAL</type>
+                    <key>s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;basic_hardware&quot;]</key>
+                    <delay>1h</delay>
+                    <history>7d</history>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <tags>
+                        <tag>
+                            <tag>S7</tag>
+                            <value>information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>17e30ab161e343b3be16ac499dd6d505</uuid>
+                    <name>S7 CPU State</name>
+                    <type>EXTERNAL</type>
+                    <key>s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;cpu_state&quot;]</key>
+                    <history>7d</history>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <tags>
+                        <tag>
+                            <tag>S7</tag>
+                            <value>information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>30f84d5edead46ecb05a72da147d3249</uuid>
+                            <expression>find(/Template_Siemens_S7_PLC/s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;cpu_state&quot;],,&quot;like&quot;,&quot;S7CpuStatusStop&quot;)=1</expression>
+                            <name>S7 PLC: CPU w stanie zatrzymania</name>
+                            <priority>HIGH</priority>
+                            <description>Specjalny trigger dla stanu zatrzymania CPU.</description>
+                        </trigger>
+                        <trigger>
+                            <uuid>9e6c962807c240f0ac06439b335852b6</uuid>
+                            <expression>change(/Template_Siemens_S7_PLC/s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;cpu_state&quot;])&gt;0</expression>
+                            <name>S7 PLC: Zmiana stanu CPU</name>
+                            <priority>WARNING</priority>
+                            <description>Reaguje na każdą zmianę wartości stanu CPU.</description>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>0db0fd76b3234eaab3e7126e15712f99</uuid>
+                    <name>S7 Last Error Code</name>
+                    <type>EXTERNAL</type>
+                    <key>s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;last_error&quot;]</key>
+                    <history>7d</history>
+                    <trends>30d</trends>
+                    <tags>
+                        <tag>
+                            <tag>S7</tag>
+                            <value>information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>20220d5f71af4570bce55d14a1b44779</uuid>
+                            <expression>last(/Template_Siemens_S7_PLC/s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;last_error&quot;])&lt;&gt;0</expression>
+                            <name>S7 PLC: Wystąpił błąd</name>
+                            <priority>HIGH</priority>
+                            <description>Trigger aktywuje się gdy wartość last_error jest różna od zera.</description>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>ef9488d83e604c8f94e725792bd079cf</uuid>
+                    <name>S7 Module</name>
+                    <type>EXTERNAL</type>
+                    <key>s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;module&quot;]</key>
+                    <delay>1h</delay>
+                    <history>7d</history>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <tags>
+                        <tag>
+                            <tag>S7</tag>
+                            <value>information</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>7475268a89a24dec8b14b6eb6039a1c9</uuid>
+                    <name>S7 Version</name>
+                    <type>EXTERNAL</type>
+                    <key>s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;version&quot;]</key>
+                    <delay>1h</delay>
+                    <history>7d</history>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <tags>
+                        <tag>
+                            <tag>S7</tag>
+                            <value>information</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>87edda48e3d0420baf00a5213f24a168</uuid>
+                            <expression>change(/Template_Siemens_S7_PLC/s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;version&quot;])&gt;0</expression>
+                            <name>S7 PLC: Zmiana wersji oprogramowania</name>
+                            <priority>INFO</priority>
+                            <description>Wykrywa zmianę wersji firmware.</description>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>21a41a6f45094f0ba35f2d04508bb820</uuid>
+                    <name>Test Script Run</name>
+                    <type>SCRIPT</type>
+                    <key>test.script.run</key>
+                    <status>DISABLED</status>
+                    <params>ls -la /tmp</params>
+                    <tags>
+                        <tag>
+                            <tag>test</tag>
+                            <value>test</value>
+                        </tag>
+                    </tags>
+                </item>
+            </items>
+            <dashboards>
+                <dashboard>
+                    <uuid>4af5383f8f9b4fa4ab9efd513c5a61c6</uuid>
+                    <name>S7 information</name>
+                    <pages>
+                        <page>
+                            <widgets>
+                                <widget>
+                                    <type>graph</type>
+                                    <name>Lass error</name>
+                                    <width>72</width>
+                                    <height>5</height>
+                                    <fields>
+                                        <field>
+                                            <type>GRAPH</type>
+                                            <name>graphid.0</name>
+                                            <value>
+                                                <host>Template_Siemens_S7_PLC</host>
+                                                <name>S7 Last Error Code</name>
+                                            </value>
+                                        </field>
+                                        <field>
+                                            <type>STRING</type>
+                                            <name>reference</name>
+                                            <value>QYIIM</value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>item</type>
+                                    <y>5</y>
+                                    <width>18</width>
+                                    <height>4</height>
+                                    <fields>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>decimal_size</name>
+                                            <value>10</value>
+                                        </field>
+                                        <field>
+                                            <type>ITEM</type>
+                                            <name>itemid.0</name>
+                                            <value>
+                                                <host>Template_Siemens_S7_PLC</host>
+                                                <key>s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;cpu_state&quot;]</key>
+                                            </value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>time_size</name>
+                                            <value>10</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>value_size</name>
+                                            <value>20</value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>problems</type>
+                                    <y>9</y>
+                                    <width>72</width>
+                                    <height>3</height>
+                                    <fields>
+                                        <field>
+                                            <type>STRING</type>
+                                            <name>reference</name>
+                                            <value>QGDIS</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>show</name>
+                                            <value>2</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>show_lines</name>
+                                            <value>5</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>show_timeline</name>
+                                            <value>0</value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>item</type>
+                                    <x>18</x>
+                                    <y>5</y>
+                                    <width>18</width>
+                                    <height>4</height>
+                                    <fields>
+                                        <field>
+                                            <type>ITEM</type>
+                                            <name>itemid.0</name>
+                                            <value>
+                                                <host>Template_Siemens_S7_PLC</host>
+                                                <key>s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;version&quot;]</key>
+                                            </value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>time_size</name>
+                                            <value>10</value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>item</type>
+                                    <x>36</x>
+                                    <y>5</y>
+                                    <width>18</width>
+                                    <height>4</height>
+                                    <fields>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>decimal_size</name>
+                                            <value>5</value>
+                                        </field>
+                                        <field>
+                                            <type>ITEM</type>
+                                            <name>itemid.0</name>
+                                            <value>
+                                                <host>Template_Siemens_S7_PLC</host>
+                                                <key>s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;module&quot;]</key>
+                                            </value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>time_size</name>
+                                            <value>10</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>value_size</name>
+                                            <value>15</value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>item</type>
+                                    <x>54</x>
+                                    <y>5</y>
+                                    <width>18</width>
+                                    <height>4</height>
+                                    <fields>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>decimal_size</name>
+                                            <value>5</value>
+                                        </field>
+                                        <field>
+                                            <type>ITEM</type>
+                                            <name>itemid.0</name>
+                                            <value>
+                                                <host>Template_Siemens_S7_PLC</host>
+                                                <key>s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;basic_hardware&quot;]</key>
+                                            </value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>time_size</name>
+                                            <value>10</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>value_size</name>
+                                            <value>15</value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                            </widgets>
+                        </page>
+                    </pages>
+                </dashboard>
+            </dashboards>
+        </template>
+    </templates>
+    <triggers>
+        <trigger>
+            <uuid>bd10a3c7efaf4a019151b096c1794fee</uuid>
+            <expression>change(/Template_Siemens_S7_PLC/s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;basic_hardware&quot;])&gt;0 
+or 
+change(/Template_Siemens_S7_PLC/s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;module&quot;])&gt;0</expression>
+            <name>S7 PLC: Zmiana konfiguracji sprzętowej</name>
+            <priority>WARNING</priority>
+            <manual_close>YES</manual_close>
+        </trigger>
+    </triggers>
+    <graphs>
+        <graph>
+            <uuid>f315714ca6b9405d8905c6fa9edaac75</uuid>
+            <name>S7 Last Error Code</name>
+            <graph_items>
+                <graph_item>
+                    <color>199C0D</color>
+                    <calc_fnc>ALL</calc_fnc>
+                    <item>
+                        <host>Template_Siemens_S7_PLC</host>
+                        <key>s7_zabbix_monitor.py[&quot;{HOST.CONN}&quot;, &quot;last_error&quot;]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+</zabbix_export>
